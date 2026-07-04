@@ -1,0 +1,57 @@
+﻿@model AutoSerwis.Mvc.UI.Models.CreateClientViewModel
+@{
+    ViewData["Title"] = "Dodaj klienta";
+}
+
+<div class="card shadow-sm" style="max-width: 600px; margin: 0 auto;">
+    <div class="card-header bg-dark text-white">
+        <h4 class="mb-0">🚗 Dodaj nowego klienta</h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label"></label>
+                <input asp-for="Name" class="form-control" placeholder="np. Jan Kowalski" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="RegistrationYear" class="form-label"></label>
+                <input asp-for="RegistrationYear" class="form-control" placeholder="np. 2024" type="number" />
+                <span asp-validation-for="RegistrationYear" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ServiceDuration" class="form-label"></label>
+                <input asp-for="ServiceDuration" class="form-control" placeholder="np. 60" type="number" />
+                <span asp-validation-for="ServiceDuration" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ClientCategoryId" class="form-label"></label>
+                <select asp-for="ClientCategoryId" class="form-select">
+                    <option value="">-- wybierz kategorię --</option>
+                    @foreach (var cat in Model.Categories)
+                    {
+                        <option value="@cat.Id">@cat.Name</option>
+                    }
+                </select>
+                <span asp-validation-for="ClientCategoryId" class="text-danger"></span>
+            </div>
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-success">Dodaj klienta</button>
+                <a asp-action="Index" class="btn btn-secondary">Anuluj</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

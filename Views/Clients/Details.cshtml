@@ -1,0 +1,80 @@
+﻿@model AutoSerwis.Mvc.UI.Models.ClientDetailsViewModel
+@{
+    ViewData["Title"] = "Szczegóły klienta";
+    var client = Model.Client;
+}
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h4 class="mb-0">🚗 Szczegóły klienta</h4>
+        <a asp-action="Index" class="btn btn-sm btn-outline-light">← Powrót</a>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Nazwa klienta / Firma:</dt>
+            <dd class="col-sm-9">@client.Name</dd>
+
+            <dt class="col-sm-3">Rok rejestracji:</dt>
+            <dd class="col-sm-9">@client.RegistrationYear</dd>
+
+            <dt class="col-sm-3">Czas trwania usługi:</dt>
+            <dd class="col-sm-9">@client.ServiceDuration min</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">🔧 Zlecenia naprawy</h5>
+    </div>
+    <div class="card-body">
+        @if (TempData["RepairOrderSuccess"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show">
+                @TempData["RepairOrderSuccess"]
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        }
+
+        @if (client.RepairOrders?.Any() == true)
+        {
+            <ul class="list-group mb-3">
+                @foreach (var r in client.RepairOrders)
+                {
+                    <li class="list-group-item">@r.Date.ToString("dd.MM.yyyy HH:mm")</li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted">Brak zaplanowanych zleceń naprawy.</p>
+        }
+    </div>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h5 class="mb-0">➕ Dodaj zlecenie naprawy</h5>
+    </div>
+    <div class="card-body">
+        <form asp-action="AddRepairOrder" method="post" style="max-width: 400px;">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+            <input type="hidden" asp-for="RepairOrderModel.ClientId" />
+
+            <div class="mb-3">
+                <label asp-for="RepairOrderModel.RepairOrderDate" class="form-label"></label>
+                <input asp-for="RepairOrderModel.RepairOrderDate" class="form-control" type="datetime-local" />
+                <span asp-validation-for="RepairOrderModel.RepairOrderDate" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-success">Dodaj zlecenie</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

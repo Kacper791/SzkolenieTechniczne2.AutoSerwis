@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../SzkolenieTechniczne2.AutoSerwis.Common/SzkolenieTechniczne2.AutoSerwis.Common.csproj" />
+  <Project Path="../SzkolenieTechniczne2.AutoSerwis.Domain/SzkolenieTechniczne2.AutoSerwis.Domain.csproj" />
+  <Project Path="../SzkolenieTechniczne2.AutoSerwis.Infrastructure/SzkolenieTechniczne2.AutoSerwis.Infrastructure.csproj" />
+  <Project Path="AutoSerwis.Mvc.UI.csproj" />
+</Solution>
