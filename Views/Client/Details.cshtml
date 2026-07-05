@@ -26,6 +26,11 @@
 
                 <div class="mt-4">
                     <a asp-action="Index" class="btn btn-outline-secondary">⬅️ Powrót do listy</a>
+
+                    <form asp-controller="Home" asp-action="SendHistoryEmail" method="post" class="d-inline">
+                        <input type="hidden" name="id" value="@Model.RepairOrderModel.ClientId" />
+                        <button type="submit" class="btn btn-warning fw-bold">✉️ Wyślij historię e-mailem</button>
+                    </form>
                 </div>
             </div>
         </div>
