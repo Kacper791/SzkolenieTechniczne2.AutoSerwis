@@ -17,7 +17,7 @@ namespace AutoSerwis.Mvc.UI.Models
         public int RegistrationYear { get; set; }
 
         [Required(ErrorMessage = "Czas trwania usługi jest wymagany.")]
-        [Range(1, 600, ErrorMessage = "Czas musi być między 1 a 600 minut.")]
+        [Range(1, 99999, ErrorMessage = "Czas trwania usługi musi być większy od 0 minut.")]
         [Display(Name = "Czas trwania usługi (min)")]
         public int ServiceDuration { get; set; }
 
