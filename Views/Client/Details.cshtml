@@ -1,0 +1,60 @@
+﻿@model AutoSerwis.Mvc.UI.Models.ClientDetailsViewModel
+@{
+    ViewData["Title"] = "Szczegóły klienta";
+}
+
+@if (TempData["RepairOrderSuccess"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show shadow-sm mb-4" role="alert">
+        🔧 @TempData["RepairOrderSuccess"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row g-4">
+    <!-- Karta informacyjna klienta -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-primary text-white py-3">
+                <h4 class="mb-0">👤 Informacje o kliencie</h4>
+            </div>
+            <div class="card-body p-4">
+                <h3 class="text-primary mb-3">@Model.Client.Name</h3>
+                <hr />
+                <p><strong>Rok rejestracji w systemie:</strong> @Model.Client.RegistrationYear</p>
+                <p><strong>Czas trwania usługi:</strong> @Model.Client.ServiceDuration minut</p>
+
+                <div class="mt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary">⬅️ Powrót do listy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Karta rejestracji nowego zlecenia naprawy -->
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-header bg-dark text-white py-3">
+                <h4 class="mb-0">⚙️ Wystaw zlecenie naprawy</h4>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="AddRepairOrder" method="post">
+                    <!-- Ukryte pole przechowujące ID klienta -->
+                    <input type="hidden" asp-for="RepairOrderModel.ClientId" />
+
+                    <div class="form-group mb-4">
+                        <label asp-for="RepairOrderModel.RepairOrderDate" class="form-label fw-bold"></label>
+                        <input asp-for="RepairOrderModel.RepairOrderDate" class="form-control" type="datetime-local" />
+                        <span asp-validation-for="RepairOrderModel.RepairOrderDate" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100 fw-bold py-2">Zarejestruj zlecenie naprawy</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

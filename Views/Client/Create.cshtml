@@ -1,0 +1,55 @@
+﻿@model AutoSerwis.Mvc.UI.Models.CreateClientViewModel
+@{
+    ViewData["Title"] = "Dodaj nowego klienta";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white text-center py-3">
+                <h4 class="mb-0">🚗 Dodaj nowy profil klienta</h4>
+            </div>
+            <div class="card-body p-4">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Name" class="form-label fw-bold"></label>
+                        <input asp-for="Name" class="form-control" placeholder="np. Jan Kowalski / Firma X" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="RegistrationYear" class="form-label fw-bold"></label>
+                        <input asp-for="RegistrationYear" class="form-control" type="number" />
+                        <span asp-validation-for="RegistrationYear" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="ServiceDuration" class="form-label fw-bold"></label>
+                        <input asp-for="ServiceDuration" class="form-control" type="number" />
+                        <span asp-validation-for="ServiceDuration" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label asp-for="ClientCategoryId" class="form-label fw-bold"></label>
+                        <select asp-for="ClientCategoryId" class="form-select"
+                                asp-items="@(new SelectList(Model.Categories, "Id", "Name"))">
+                            <option value="">-- wybierz kategorię --</option>
+                        </select>
+                        <span asp-validation-for="ClientCategoryId" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-success px-4">Dodaj klienta</button>
+                        <a asp-action="Index" class="btn btn-secondary px-4">Anuluj</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
