@@ -1,12 +1,13 @@
+using AutoSerwis.Mvc.UI.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SzkolenieTechniczne2.AutoSerwis.Domain.Command.Client.Create;
 using SzkolenieTechniczne2.AutoSerwis.Domain.Command.Client.Delete;
+using SzkolenieTechniczne2.AutoSerwis.Domain.Command.Client.SendHistoryEmail;
 using SzkolenieTechniczne2.AutoSerwis.Domain.Command.RepairOrder.Register;
 using SzkolenieTechniczne2.AutoSerwis.Domain.Query.Client.GetAllClientsQuery;
 using SzkolenieTechniczne2.AutoSerwis.Domain.Query.Client.GetClientCategories;
 using SzkolenieTechniczne2.AutoSerwis.Domain.Query.Client.GetClientQuery;
-using AutoSerwis.Mvc.UI.Models;
 
 
 namespace AutoSerwis.Mvc.UI.Controllers
@@ -122,6 +123,16 @@ namespace AutoSerwis.Mvc.UI.Controllers
             await _mediator.Send(new DeleteClientCommand(id));
             TempData["Success"] = "Klient został usunięty.";
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendHistoryEmail(long id)
+        {
+            await _mediator.Send(new SendHistoryEmailCommand(id));
+
+            TempData["EmailSuccessMessage"] = "Wiadomość e-mail z pełną historią napraw została pomyślnie wygenerowana i wysłana na adres klienta!";
+
+            return Redirect(Request.Headers["Referer"].ToString());
         }
     }
 }
